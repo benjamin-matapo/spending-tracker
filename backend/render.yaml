@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: spending-tracker-backend
+    env: go
+    plan: free
+    autoDeploy: true
+    buildCommand: go build -o server main.go
+    startCommand: ./server
+    healthCheckPath: /healthz
