@@ -43,7 +43,7 @@ export function Navbar() {
             </button>
           </div>
         </div>
-        <div className="md:hidden grid grid-cols-4 gap-2 py-2">
+        <div className="md:hidden grid grid-cols-5 gap-1 py-1">
           {NAV.map((item) => {
             const active = pathname === item.href;
             return (
@@ -51,16 +51,20 @@ export function Navbar() {
                 key={item.href}
                 href={item.href}
                 aria-current={active ? "page" : undefined}
-                className={cn("flex flex-col items-center justify-center p-2 rounded-md text-xs whitespace-nowrap", active ? "bg-accent" : "hover:bg-accent")}
+                aria-label={item.label}
+                className={cn("min-w-0 overflow-hidden flex flex-col items-center justify-center p-2 rounded-md text-xs whitespace-nowrap", active ? "bg-accent" : "hover:bg-accent")}
               > 
                 {item.icon ? <item.icon className="h-5 w-5" /> : <span className="h-5" />}
-                <span className="mt-1 text-[10px] leading-none">{item.label}</span>
+                {/* Hide labels on very small screens to prevent wrapping; show from sm and up */}
+                <span className="mt-1 text-[10px] leading-none hidden sm:block">{item.label}</span>
+                <span className="sr-only">{item.label}</span>
               </Link>
             );
           })}
-          <button aria-label="Toggle theme" onClick={toggleTheme} className={cn("flex flex-col items-center justify-center p-2 rounded-md text-xs hover:bg-accent")}> 
+          <button aria-label="Toggle theme" onClick={toggleTheme} className={cn("min-w-0 flex flex-col items-center justify-center p-2 rounded-md text-xs hover:bg-accent")}> 
             {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-            <span className="mt-1">Theme</span>
+            <span className="mt-1 text-[10px] leading-none hidden sm:block">Theme</span>
+            <span className="sr-only">Theme</span>
           </button>
         </div>
       </div>
