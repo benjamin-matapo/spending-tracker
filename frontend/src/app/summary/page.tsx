@@ -58,6 +58,7 @@ export default function SummaryPage() {
           )}
         </CardContent>
       </Card>
+      <Card>
         <CardHeader>
           <CardTitle>Spending by Category (Pie)</CardTitle>
         </CardHeader>
@@ -80,6 +81,7 @@ export default function SummaryPage() {
           )}
         </CardContent>
       </Card>
+      <Card className="md:col-span-2">
         <CardHeader>
           <CardTitle>Spending Over Time (Line)</CardTitle>
         </CardHeader>
