@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { api, Transaction } from "@/lib/api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Pie, PieChart, Cell, ResponsiveContainer, BarChart, XAxis, YAxis, Tooltip, Bar, LineChart, Line } from "recharts";
+import { Pie, PieChart, Cell, ResponsiveContainer, BarChart, XAxis, YAxis, Tooltip, Bar, LineChart, Line, Legend } from "recharts";
 import { Spinner } from "@/components/ui/spinner";
 
 const COLORS = ["#6366f1", "#22c55e", "#06b6d4", "#f59e0b", "#ef4444", "#a855f7", "#14b8a6", "#f43f5e"];
@@ -58,29 +58,28 @@ export default function SummaryPage() {
           )}
         </CardContent>
       </Card>
-      <Card>
         <CardHeader>
           <CardTitle>Spending by Category (Pie)</CardTitle>
         </CardHeader>
         <CardContent className="h-80">
           {loading ? (
-            <p className="text-sm text-muted-foreground">Loading...</p>
+            <div className="flex items-center gap-2 text-sm text-muted-foreground"><Spinner /> Loading...</div>
           ) : data.length === 0 ? (
             <p className="text-sm text-muted-foreground">No data yet.</p>
           ) : (
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
-                <Pie data={data} dataKey="value" nameKey="name" outerRadius={110}>
+                <Pie data={data} dataKey="value" nameKey="name" outerRadius={110} label>
                   {data.map((_, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
+                <Legend verticalAlign="bottom" height={24} wrapperStyle={{ fontSize: 12 }} />
               </PieChart>
             </ResponsiveContainer>
           )}
         </CardContent>
       </Card>
-      <Card className="md:col-span-2">
         <CardHeader>
           <CardTitle>Spending Over Time (Line)</CardTitle>
         </CardHeader>
