@@ -1,11 +1,12 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Info } from "lucide-react";
 
 export default function AboutPage() {
   return (
-    <div className="max-w-3xl mx-auto">
-      <Card>
+    <div className="max-w-3xl mx-auto min-h-[70vh] flex items-center">
+      <Card className="w-full">
         <CardHeader>
-          <CardTitle>About Spending Tracker</CardTitle>
+          <CardTitle className="flex items-center gap-2"><Info className="h-5 w-5" /> About Spending Tracker</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4 leading-relaxed text-muted-foreground">
           <p>

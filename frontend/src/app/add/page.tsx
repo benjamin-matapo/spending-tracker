@@ -53,8 +53,8 @@ export default function AddTransactionPage() {
   };
 
   return (
-    <div className="max-w-xl mx-auto">
-      <Card>
+    <div className="max-w-xl mx-auto min-h-[70vh] flex items-center">
+      <Card className="w-full">
         <CardHeader>
           <CardTitle>Add Transaction</CardTitle>
           <CardDescription>Record a new expense</CardDescription>
@@ -80,13 +80,11 @@ export default function AddTransactionPage() {
             </div>
             <div className="space-y-2">
               <Label htmlFor="date">Date</Label>
-              <div className="relative">
-                <Input id="date" type="date" value={date} onChange={(e) => setDate(e.target.value)} required className="pr-24" />
-                <div className="absolute inset-y-0 right-0 flex items-center pr-2">
-                  <Button type="button" variant="outline" size="sm" onClick={() => setDate(today)}>
-                    Today
-                  </Button>
-                </div>
+              <div className="flex items-center gap-2">
+                <Input id="date" type="date" value={date} onChange={(e) => setDate(e.target.value)} required className="flex-1" />
+                <Button type="button" variant="outline" size="sm" onClick={() => setDate(today)}>
+                  Today
+                </Button>
               </div>
             </div>
             <div className="space-y-2">

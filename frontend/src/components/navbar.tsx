@@ -3,14 +3,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Wallet, PlusCircle, List, PieChart, Moon, Sun } from "lucide-react";
+import { Wallet, PlusCircle, List, PieChart, Moon, Sun, Info } from "lucide-react";
 import { useTheme } from "next-themes";
 
 const NAV = [
   { href: "/add", label: "Add", icon: PlusCircle },
   { href: "/transactions", label: "Transactions", icon: List },
   { href: "/summary", label: "Summary", icon: PieChart },
-  { href: "/about", label: "About" },
+  { href: "/about", label: "About", icon: Info },
 ];
 
 export function Navbar() {
@@ -51,10 +51,10 @@ export function Navbar() {
                 key={item.href}
                 href={item.href}
                 aria-current={active ? "page" : undefined}
-                className={cn("flex flex-col items-center justify-center p-2 rounded-md text-xs", active ? "bg-accent" : "hover:bg-accent")}
+                className={cn("flex flex-col items-center justify-center p-2 rounded-md text-xs whitespace-nowrap", active ? "bg-accent" : "hover:bg-accent")}
               > 
                 {item.icon ? <item.icon className="h-5 w-5" /> : <span className="h-5" />}
-                <span className="mt-1">{item.label}</span>
+                <span className="mt-1 text-[10px] leading-none">{item.label}</span>
               </Link>
             );
           })}
