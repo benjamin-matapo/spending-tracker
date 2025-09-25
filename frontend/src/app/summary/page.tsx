@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { api, Transaction } from "@/lib/api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Pie, PieChart, Cell, ResponsiveContainer, BarChart, XAxis, YAxis, Tooltip, Bar, LineChart, Line } from "recharts";
+import { Spinner } from "@/components/ui/spinner";
 
 const COLORS = ["#6366f1", "#22c55e", "#06b6d4", "#f59e0b", "#ef4444", "#a855f7", "#14b8a6", "#f43f5e"];
 
@@ -42,7 +43,7 @@ export default function SummaryPage() {
         </CardHeader>
         <CardContent className="h-80">
           {loading ? (
-            <p className="text-sm text-muted-foreground">Loading...</p>
+            <div className="flex items-center gap-2 text-sm text-muted-foreground"><Spinner /> Loading...</div>
           ) : data.length === 0 ? (
             <p className="text-sm text-muted-foreground">No data yet.</p>
           ) : (
@@ -85,7 +86,7 @@ export default function SummaryPage() {
         </CardHeader>
         <CardContent className="h-80">
           {loading ? (
-            <p className="text-sm text-muted-foreground">Loading...</p>
+            <div className="flex items-center gap-2 text-sm text-muted-foreground"><Spinner /> Loading...</div>
           ) : lineData.length === 0 ? (
             <p className="text-sm text-muted-foreground">No data yet.</p>
           ) : (

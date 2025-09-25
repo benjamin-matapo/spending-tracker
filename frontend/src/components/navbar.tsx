@@ -10,6 +10,7 @@ const NAV = [
   { href: "/add", label: "Add", icon: PlusCircle },
   { href: "/transactions", label: "Transactions", icon: List },
   { href: "/summary", label: "Summary", icon: PieChart },
+  { href: "/about", label: "About" },
 ];
 
 export function Navbar() {
@@ -21,12 +22,21 @@ export function Navbar() {
       <div className="container">
         <div className="hidden md:flex items-center justify-between h-14">
           <div className="flex items-center gap-2">
-            <Wallet className="h-5 w-5" />
-            <span className="font-semibold">Spending Tracker</span>
+            <Link href="/" className="flex items-center gap-2 hover:opacity-90" aria-label="Go to home">
+              <Wallet className="h-5 w-5" />
+              <span className="font-semibold">Spending Tracker</span>
+            </Link>
           </div>
           <div className="flex items-center gap-1">
             {NAV.map((item) => (
-              <Link key={item.href} href={item.href} className={cn("px-3 py-2 rounded-md text-sm", pathname === item.href ? "bg-accent" : "hover:bg-accent")}>{item.label}</Link>
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={pathname === item.href ? "page" : undefined}
+                className={cn("px-3 py-2 rounded-md text-sm", pathname === item.href ? "bg-accent" : "hover:bg-accent")}
+              >
+                {item.label}
+              </Link>
             ))}
             <button aria-label="Toggle theme" onClick={toggleTheme} className="ml-2 p-2 rounded-md hover:bg-accent">
               {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
@@ -35,11 +45,15 @@ export function Navbar() {
         </div>
         <div className="md:hidden grid grid-cols-4 gap-2 py-2">
           {NAV.map((item) => {
-            const Icon = item.icon;
             const active = pathname === item.href;
             return (
-              <Link key={item.href} href={item.href} className={cn("flex flex-col items-center justify-center p-2 rounded-md text-xs", active ? "bg-accent" : "hover:bg-accent")}> 
-                <Icon className="h-5 w-5" />
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={active ? "page" : undefined}
+                className={cn("flex flex-col items-center justify-center p-2 rounded-md text-xs", active ? "bg-accent" : "hover:bg-accent")}
+              > 
+                {item.icon ? <item.icon className="h-5 w-5" /> : <span className="h-5" />}
                 <span className="mt-1">{item.label}</span>
               </Link>
             );
