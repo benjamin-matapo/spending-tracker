@@ -1,21 +1,38 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { api } from "@/lib/api";
+import { api, Transaction } from "@/lib/api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Pie, PieChart, Cell, ResponsiveContainer, BarChart, XAxis, YAxis, Tooltip, Bar } from "recharts";
+import { Pie, PieChart, Cell, ResponsiveContainer, BarChart, XAxis, YAxis, Tooltip, Bar, LineChart, Line } from "recharts";
 
 const COLORS = ["#6366f1", "#22c55e", "#06b6d4", "#f59e0b", "#ef4444", "#a855f7", "#14b8a6", "#f43f5e"];
 
 export default function SummaryPage() {
   const [totals, setTotals] = useState<Record<string, number>>({});
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.getTotalsByCategory().then((data) => setTotals(data)).finally(() => setLoading(false));
+    Promise.all([api.getTotalsByCategory(), api.getAllTransactions()])
+      .then(([t, trs]) => {
+        setTotals(t);
+        setTransactions(trs);
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   const data = useMemo(() => Object.entries(totals).map(([name, value]) => ({ name, value })), [totals]);
+  const lineData = useMemo(() => {
+    // Aggregate by date (YYYY-MM-DD)
+    const map = new Map<string, number>();
+    for (const t of transactions) {
+      map.set(t.date, (map.get(t.date) || 0) + t.amount);
+    }
+    // Sort by date ascending
+    return Array.from(map.entries())
+      .sort((a, b) => (a[0] < b[0] ? -1 : 1))
+      .map(([date, value]) => ({ date, value }));
+  }, [transactions]);
 
   return (
     <div className="max-w-5xl mx-auto grid gap-4 md:grid-cols-2">
@@ -58,6 +75,27 @@ export default function SummaryPage() {
                   ))}
                 </Pie>
               </PieChart>
+            </ResponsiveContainer>
+          )}
+        </CardContent>
+      </Card>
+      <Card className="md:col-span-2">
+        <CardHeader>
+          <CardTitle>Spending Over Time (Line)</CardTitle>
+        </CardHeader>
+        <CardContent className="h-80">
+          {loading ? (
+            <p className="text-sm text-muted-foreground">Loading...</p>
+          ) : lineData.length === 0 ? (
+            <p className="text-sm text-muted-foreground">No data yet.</p>
+          ) : (
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={lineData}>
+                <XAxis dataKey="date" tick={{ fontSize: 12 }} />
+                <YAxis tick={{ fontSize: 12 }} />
+                <Tooltip />
+                <Line type="monotone" dataKey="value" stroke="#5FA8D3" strokeWidth={2} dot={false} />
+              </LineChart>
             </ResponsiveContainer>
           )}
         </CardContent>

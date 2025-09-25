@@ -1,6 +1,7 @@
 import "./globals.css";
 import { ReactNode } from "react";
 import { Navbar } from "@/components/navbar";
+import { ThemeProvider } from "@/components/theme-provider";
 
 export const metadata = {
   title: "Spending Tracker",
@@ -9,12 +10,14 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className="min-h-screen flex flex-col">
-        <div className="flex-1 container py-4 md:py-8">
-          {children}
-        </div>
-        <Navbar />
+        <ThemeProvider>
+          <div className="flex-1 container py-4 md:py-8">
+            {children}
+          </div>
+          <Navbar />
+        </ThemeProvider>
       </body>
     </html>
   );

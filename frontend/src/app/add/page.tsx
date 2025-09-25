@@ -20,9 +20,10 @@ const categories = [
 ];
 
 export default function AddTransactionPage() {
+  const today = new Date().toISOString().slice(0, 10);
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(today);
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
@@ -42,7 +43,7 @@ export default function AddTransactionPage() {
       setMessage("Transaction added!");
       setAmount("");
       setCategory("");
-      setDate("");
+      setDate(today);
       setDescription("");
     } catch (err: any) {
       setMessage(err?.message || "Failed to add transaction");
@@ -79,7 +80,14 @@ export default function AddTransactionPage() {
             </div>
             <div className="space-y-2">
               <Label htmlFor="date">Date</Label>
-              <Input id="date" type="date" value={date} onChange={(e) => setDate(e.target.value)} required />
+              <div className="relative">
+                <Input id="date" type="date" value={date} onChange={(e) => setDate(e.target.value)} required className="pr-24" />
+                <div className="absolute inset-y-0 right-0 flex items-center pr-2">
+                  <Button type="button" variant="outline" size="sm" onClick={() => setDate(today)}>
+                    Today
+                  </Button>
+                </div>
+              </div>
             </div>
             <div className="space-y-2">
               <Label htmlFor="description">Description</Label>
