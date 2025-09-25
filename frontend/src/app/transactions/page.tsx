@@ -29,19 +29,19 @@ export default function TransactionsPage() {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="text-left border-b">
-                    <th className="py-2 pr-4">Date</th>
-                    <th className="py-2 pr-4">Category</th>
+                    <th className="py-2 pr-4 whitespace-nowrap">Date</th>
+                    <th className="py-2 pr-4 whitespace-nowrap">Category</th>
+                    <th className="py-2 pr-4 whitespace-nowrap text-right">Amount</th>
                     <th className="py-2 pr-4">Description</th>
-                    <th className="py-2 text-right">Amount</th>
                   </tr>
                 </thead>
                 <tbody>
                   {items.map((t) => (
                     <tr key={t.id} className="border-b last:border-0">
                       <td className="py-2 pr-4 whitespace-nowrap">{t.date}</td>
-                      <td className="py-2 pr-4">{t.category}</td>
+                      <td className="py-2 pr-4 whitespace-nowrap">{t.category}</td>
+                      <td className="py-2 pr-4 whitespace-nowrap text-right">£{t.amount.toFixed(2)}</td>
                       <td className="py-2 pr-4 max-w-[240px] truncate">{t.description}</td>
-                      <td className="py-2 text-right">£{t.amount.toFixed(2)}</td>
                     </tr>
                   ))}
                 </tbody>
